@@ -37,7 +37,7 @@ ILIAS_VERSION_DB_USER=${DB_USER}_${ILIAS_VERSION}
 sudo mysql -h ${DB_HOST} -u root -p${DB_ROOT_PWD} -e "DROP DATABASE IF EXISTS ${ILIAS_VERSION_DB};"
 sudo mysql -h ${DB_HOST} -u root -p${DB_ROOT_PWD} -e "DROP USER IF EXISTS ${ILIAS_VERSION_DB_USER}@'%';"
 # Create database entitites for current version
-sudo mysql -h ${DB_HOST} -u root -p${DB_ROOT_PWD} -e "CREATE DATABASE ${ILIAS_VERSION_DB} DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+sudo mysql -h ${DB_HOST} -u root -p${DB_ROOT_PWD} -e "CREATE DATABASE ${ILIAS_VERSION_DB} DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
 sudo mysql -h ${DB_HOST} -u root -p${DB_ROOT_PWD} -e "CREATE USER ${ILIAS_VERSION_DB_USER}@'%' IDENTIFIED BY '${DB_USER_PWD}';"
 sudo mysql -h ${DB_HOST} -u root -p${DB_ROOT_PWD} -e "GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,CREATE TEMPORARY TABLES,DROP,INDEX,ALTER ON ${ILIAS_VERSION_DB}.* TO ${ILIAS_VERSION_DB_USER}@'%';"
 sudo mysql -h ${DB_HOST} -u root -p${DB_ROOT_PWD} -e "FLUSH PRIVILEGES;"
