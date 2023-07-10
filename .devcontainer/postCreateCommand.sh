@@ -49,3 +49,10 @@ git config --global --add safe.directory $ILIASDIR
 # Add cronjob for instance
 (sudo crontab -l 2>/dev/null; echo "* * * * * /usr/local/bin/php /var/www/html/ilias-${ILIAS_VERSION}/cron/cron.php > /dev/null") | sudo crontab -
 done
+
+sudo a2enmod rewrite
+
+cp php.ini /usr/local/etc/php/php.ini
+sudo /etc/init.d/apache2 reload
+chown -R www-data:www-data /var/www/iliasdata-8/iliastest
+chmod -R 775 /var/www/iliasdata-8/iliastest
