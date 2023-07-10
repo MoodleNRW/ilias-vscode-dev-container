@@ -39,8 +39,13 @@ sudo mysql -h ${DB_HOST} -u root -p${DB_ROOT_PWD} -e "DROP USER IF EXISTS ${ILIA
 # Create database entitites for current version
 sudo mysql -h ${DB_HOST} -u root -p${DB_ROOT_PWD} -e "CREATE DATABASE ${ILIAS_VERSION_DB} DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
 sudo mysql -h ${DB_HOST} -u root -p${DB_ROOT_PWD} -e "CREATE USER ${ILIAS_VERSION_DB_USER}@'%' IDENTIFIED BY '${DB_USER_PWD}';"
-sudo mysql -h ${DB_HOST} -u root -p${DB_ROOT_PWD} -e "GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,CREATE TEMPORARY TABLES,DROP,INDEX,ALTER ON ${ILIAS_VERSION_DB}.* TO ${ILIAS_VERSION_DB_USER}@'%';"
+sudo mysql -h ${DB_HOST} -u root -p${DB_ROOT_PWD} -e "GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,CREATE TEMPORARY TABLES,DROP,INDEX,LOCK TABLES,ALTER ON ${ILIAS_VERSION_DB}.* TO ${ILIAS_VERSION_DB_USER}@'%';"
 sudo mysql -h ${DB_HOST} -u root -p${DB_ROOT_PWD} -e "FLUSH PRIVILEGES;"
 
 sudo php /var/www/html/ilias-${ILIAS_VERSION}/setup/setup.php install /var/www/minimal-config.json --yes
+
+git config --global --add safe.directory $ILIASDIR
+
+# Add cronjob for instance
+(sudo crontab -l 2>/dev/null; echo "* * * * * /usr/local/bin/php /var/www/html/ilias-${ILIAS_VERSION}/cron/cron.php > /dev/null") | sudo crontab -
 done

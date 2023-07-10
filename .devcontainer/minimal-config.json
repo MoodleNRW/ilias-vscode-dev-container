@@ -9,14 +9,13 @@
     "port": 3306,
     "database": "ilias_8",
     "user": "ilias_8",
-    "password": "ilias",
-    "create_database": true
+    "password": "ilias"
   },
   "filesystem": {
     "data_dir": "/var/www/iliasdata-8/"
   },
   "http": {
-    "path": "localhost"
+    "path": "localhost/ilias-8"
   },
   "systemfolder": {
     "contact": {
