@@ -50,6 +50,3 @@ RUN echo 'post_max_size = 2048M' >> /usr/local/etc/php/conf.d/docker-php-postmax
 RUN echo 'max_input_vars = 5000' >> /usr/local/etc/php/conf.d/docker-php-maxinputvars.ini;
 RUN echo 'date.timezone = Europe/Amsterdam' >> /usr/local/etc/php/conf.d/docker-php-datetimezone.ini;
 RUN echo 'memory_limit = 512M' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini;
-
-# Copy ILIAS config file
-COPY minimal-config.json /var/www/minimal-config.json
