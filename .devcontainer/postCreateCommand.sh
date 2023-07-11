@@ -53,6 +53,6 @@ done
 sudo a2enmod rewrite
 
 cp php.ini /usr/local/etc/php/php.ini
-sudo /etc/init.d/apache2 reload
 chown -R www-data:www-data /var/www/iliasdata-8/iliastest
 chmod -R 775 /var/www/iliasdata-8/iliastest
+sudo /etc/init.d/apache2 reload
