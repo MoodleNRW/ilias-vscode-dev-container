@@ -3,7 +3,7 @@ ARG VARIANT="7.4"
 FROM mcr.microsoft.com/vscode/devcontainers/php:0-${VARIANT}
 
 # Install MariaDB client
-# Fix for Missing Key in https://dl.yarnpkg.com/debian stable InRelease
+# Fix for Missing Key in https://dl.yarnpkg.com/debian stable InRelease | https://github.com/yarnpkg/yarn/issues/7866
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 RUN sudo apt update

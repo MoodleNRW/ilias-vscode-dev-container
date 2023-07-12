@@ -8,6 +8,7 @@
     2. [macOS](#macos-vscode)
 3. [Erster Start von VSCode](#vscode-start)
 4. [Container starten](#container)
+4. [Ilias Standard-Nutzer](#iliasuser)
 
 
 ## Docker installieren <a name="docker-installieren"></a>
@@ -73,3 +74,6 @@ Dev Containers von Microsoft (`ms-vscode-remote.remote-containers`) und - im Fal
 * Beim erstmaligen Öffnen wird nun Ilias installiert. Das kann einige Zeit in Anspruch nehmen 🕒
 
 Anschließend sollte Ilias über `localhost:8080/ilias-{VERSION}` erreichbar sein.
+
+## Ilias Standard-Nutzer <a name="iliasuser">
+* Der default user nach einer Erst-Installation ist `root`, das zugehörige Passwort `homer`
