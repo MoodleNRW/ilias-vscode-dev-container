@@ -1,8 +1,14 @@
 # [Choice] PHP version (use -bullseye variants on local arm64/Apple Silicon): 8, 8.1, 8.0, 7, 7.4, 7.3, 8-bullseye, 8.1-bullseye, 8.0-bullseye, 7-bullseye, 7.4-bullseye, 7.3-bullseye, 8-buster, 8.1-buster, 8.0-buster, 7-buster, 7.4-buster
-ARG VARIANT=8-bullseye
+ARG VARIANT="7.4"
 FROM mcr.microsoft.com/vscode/devcontainers/php:0-${VARIANT}
 
 # Install MariaDB client
+# Fix for Missing Key in https://dl.yarnpkg.com/debian stable InRelease
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+RUN sudo apt update
+RUN sudo apt install yarn
+
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get install -y mariadb-client \ 
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*

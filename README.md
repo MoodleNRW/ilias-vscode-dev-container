@@ -72,4 +72,4 @@ Dev Containers von Microsoft (`ms-vscode-remote.remote-containers`) und - im Fal
 * Auf *Reopen in Container* klicken.
 * Beim erstmaligen Öffnen wird nun Ilias installiert. Das kann einige Zeit in Anspruch nehmen 🕒
 
-Anschließend sollte Ilias über `localhost:8080/ilias-8` erreichbar sein.
+Anschließend sollte Ilias über `localhost:8080/ilias-{VERSION}` erreichbar sein.
