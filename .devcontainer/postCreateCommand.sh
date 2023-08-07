@@ -7,7 +7,6 @@ done
 PWD="$(pwd)"
 
 # ILIAS
-
 echo -e "\nInstall ILIAS\n"
 sudo chmod 755 $PWD &&
 sudo rm -rf /var/www/html && 
@@ -20,10 +19,14 @@ if [ -d "$DATADIR" ]; then
 fi
 
 if [ ! -d "$DATADIR" ]; then
-  sudo mkdir -p $DATADIR &&
-  sudo chown www-data:www-data $DATADIR &&
-  sudo chmod 770 $DATADIR
+  ## Bei Umleitungsfehler diesen Schritt ggf noch einmal manuell ausführen.
+echo -e "DATADIR doesnt exist"
+  sudo mkdir -p $DATADIR 
 fi
+
+echo -e "DATADIR chmod"
+sudo chown -R www-data:www-data $DATADIR &&
+sudo chmod -R 775 $DATADIR
 
 ILIASDIR=$PWD/ilias-${ILIAS_VERSION}
 if [ ! -d "$ILIASDIR" ]; then
@@ -69,3 +72,4 @@ if [ ! -d "$DATADIR/iliastest" ]; then
   sudo chown -R www-data:www-data ${DATADIR}/iliastest
   sudo chmod -R 775 ${DATADIR}/iliastest
 fi
+

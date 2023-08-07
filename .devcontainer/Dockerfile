@@ -30,8 +30,11 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 # Install zip
 RUN docker-php-ext-install zip
 
-# Install intl
-RUN docker-php-ext-install intl
+# Install ImageMagick
+RUN docker-php-ext-install imagemagick
+
+# Install OpenJDK
+RUN docker-php-ext-install openjdk-11-jdk
 
 # Install gd
 RUN docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype

@@ -9,6 +9,7 @@
 3. [Erster Start von VSCode](#vscode-start)
 4. [Container starten](#container)
 4. [Anmeldung im ILIAS](#iliasuser)
+4. [Anmeldung in DB Container](#dbuser)
 
 
 ## Docker installieren <a name="docker-installieren"></a>
@@ -76,4 +77,7 @@ Dev Containers von Microsoft (`ms-vscode-remote.remote-containers`) und - im Fal
 Anschließend sollte Ilias über `localhost:8080/ilias-{VERSION}` erreichbar sein.
 
 ## Anmeldung im ILIAS <a name="iliasuser">
-* Der default user nach einer Erst-Installation ist `root`, das zugehörige Passwort `homer`
+* Der default user nach einer Erst-Installation ist `root`, das zugehörige Passwort `homer`.
+
+## Anmeldung im DB Container <a name="dbuser">
+* Nach der Installation kann die DB mit dem user `root` und Passwort `mariadb` aufgerufen werden.
