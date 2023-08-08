@@ -39,7 +39,7 @@ if [ ! -d "$ILIASDIR" ]; then
   fi
 fi
 
-MIN_CONFIG_JSON='{"common": {"client_id": "iliastest", "server_timezone": "Europe/Berlin"},"database": {"type": "innodb","host": "db","port": 3306,"database": "ilias_'$ILIAS_VERSION'","user": "ilias_'$ILIAS_VERSION'","password": "ilias"},"filesystem": {"data_dir": "'$DATADIR'"},"http": {"path": "'$ILIASDIR'" },"systemfolder": {"contact": {"firstname": "Admin","lastname": "Admin","email": "admin@idev.dev"}},"language": {"default_language": "de","install_languages": ["de"],"install_local_languages": ["de"]},"logging": {"enable": true,"path_to_logfile": "/var/log/ilias_test.log","errorlog_dir": "/var/log/ilias_errorlogs/"},"utilities" : {"path_to_convert" : "/usr/bin/convert","path_to_zip" : "/usr/bin/zip","path_to_unzip" : "/usr/bin/unzip"}}'
+MIN_CONFIG_JSON='{"common": {"client_id": "iliastest", "server_timezone": "Europe/Berlin"},"database": {"type": "innodb","host": "db","port": 3306,"database": "ilias_'$ILIAS_VERSION'","user": "ilias_'$ILIAS_VERSION'","password": "ilias"},"filesystem": {"data_dir": "'$DATADIR'"},"http": {"path": "'$ILIASDIR'" },"systemfolder": {"contact": {"firstname": "Admin","lastname": "Admin","email": "admin@idev.dev"}},"language": {"default_language": "de","install_languages": ["de", "en"],"install_local_languages": ["de"]},"logging": {"enable": true,"path_to_logfile": "/workspace/tmp/log/ilias_test.log","errorlog_dir": "/workspace/tmp/log/ilias_errorlogs/"},"utilities" : {"path_to_convert" : "/usr/bin/convert","path_to_zip" : "/usr/bin/zip","path_to_unzip" : "/usr/bin/unzip"}}'
 sudo echo ${MIN_CONFIG_JSON} > .devcontainer/minimal-config.json
 sudo cp .devcontainer/minimal-config.json /var/www/minimal-config.json
 
@@ -74,17 +74,13 @@ fi
 sudo chown -R www-data:www-data ${DATADIR}/iliastest
 sudo chmod -R 775 ${DATADIR}/iliastest
 
+if [ ! -d "$PWD/tmp/log/ilias_errorlogs/" ]; then
+  sudo mkdir -p $PWD/tmp/log/ilias_errorlogs/
+fi
+
 if [ ! -f "/var/www/ilias_test.log" ]; then
-  sudo touch /var/log/ilias_test.log
+  sudo touch /workspace/tmp/log/ilias_test.log
 fi
 
-sudo chown www-data:www-data /var/log/ilias_test.log
-sudo chmod 775 /var/log/ilias_test.log
-
-if [ ! -d "/var/log/ilias_errorlogs/" ]; then
-  sudo mkdir /var/log/ilias_errorlogs/
-fi
-
-sudo chown -R www-data:www-data /var/log/ilias_errorlogs/
-sudo chmod -R 775 /var/log/ilias_errorlogs/
-
+sudo chown -R www-data:www-data $PWD/tmp/
+sudo chmod -R 775 $PWD/tmp/

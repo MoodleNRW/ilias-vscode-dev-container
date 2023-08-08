@@ -24,7 +24,7 @@
   "remoteUser": "vscode",
   // Set environment variables,
   "remoteEnv": {
-    "ILIAS_VERSION": "7", //e.g. 7, 8 etc. - multiple selections are possible!
+    "ILIAS_VERSION": "8", //e.g. 7, 8 etc. - multiple selections are possible!
     "ADMIN_NAME": "admin",
     "ADMIN_PASS": "SecretP4$$word",
     "ADMIN_MAIL": "admin@idev.dev",
