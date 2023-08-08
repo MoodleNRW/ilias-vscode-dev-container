@@ -8,7 +8,7 @@ PWD="$(pwd)"
 
 # ILIAS
 echo -e "\nInstall ILIAS\n"
-sudo chmod 755 $PWD &&
+sudo chmod 775 $PWD &&
 sudo rm -rf /var/www/html && 
 sudo ln -s $PWD /var/www/html
 
@@ -39,7 +39,7 @@ if [ ! -d "$ILIASDIR" ]; then
   fi
 fi
 
-MIN_CONFIG_JSON='{"common": {"client_id": "iliastest","server_timezone": "Europe/Berlin"},"database": {"type": "innodb","host": "db","port": 3306,"database": "ilias_'$ILIAS_VERSION'","user": "ilias_'$ILIAS_VERSION'","password": "ilias"},"filesystem": {"data_dir": "'$DATADIR'"},"http": {"path": "'$ILIASDIR'"},"systemfolder": {"contact": {"firstname": "Admin","lastname": "Admin","email": "admin@idev.dev"}},"language": {"default_language": "en","install_languages": ["de", "en"],"install_local_languages": ["de"]}}'
+MIN_CONFIG_JSON='{"common": {"client_id": "iliastest", "server_timezone": "Europe/Berlin"},"database": {"type": "innodb","host": "db","port": 3306,"database": "ilias_'$ILIAS_VERSION'","user": "ilias_'$ILIAS_VERSION'","password": "ilias"},"filesystem": {"data_dir": "'$DATADIR'"},"http": {"path": "'$ILIASDIR'" },"systemfolder": {"contact": {"firstname": "Admin","lastname": "Admin","email": "admin@idev.dev"}},"language": {"default_language": "de","install_languages": ["de"],"install_local_languages": ["de"]},"logging": {"enable": true,"path_to_logfile": "/var/log/ilias_test.log","errorlog_dir": "/var/log/ilias_errorlogs/"},"utilities" : {"path_to_convert" : "/usr/bin/convert","path_to_zip" : "/usr/bin/zip","path_to_unzip" : "/usr/bin/unzip"}}'
 sudo echo ${MIN_CONFIG_JSON} > .devcontainer/minimal-config.json
 sudo cp .devcontainer/minimal-config.json /var/www/minimal-config.json
 
@@ -62,14 +62,29 @@ git config --global --add safe.directory $ILIASDIR
 
 # Add cronjob for instance
 (sudo crontab -l 2>/dev/null; echo "* * * * * /usr/local/bin/php /var/www/html/ilias-${ILIAS_VERSION}/cron/cron.php > /dev/null") | sudo crontab -
-chown -R www-data:www-data $ILIASDIR
+sudo chown -R www-data:www-data $ILIASDIR
 done
 
 sudo cp .devcontainer/php.ini /usr/local/etc/php/php.ini
 
 if [ ! -d "$DATADIR/iliastest" ]; then
   sudo mkdir ${DATADIR}/iliastest
-  sudo chown -R www-data:www-data ${DATADIR}/iliastest
-  sudo chmod -R 775 ${DATADIR}/iliastest
 fi
+
+sudo chown -R www-data:www-data ${DATADIR}/iliastest
+sudo chmod -R 775 ${DATADIR}/iliastest
+
+if [ ! -f "/var/www/ilias_test.log" ]; then
+  sudo touch /var/log/ilias_test.log
+fi
+
+sudo chown www-data:www-data /var/log/ilias_test.log
+sudo chmod 775 /var/log/ilias_test.log
+
+if [ ! -d "/var/log/ilias_errorlogs/" ]; then
+  sudo mkdir /var/log/ilias_errorlogs/
+fi
+
+sudo chown -R www-data:www-data /var/log/ilias_errorlogs/
+sudo chmod -R 775 /var/log/ilias_errorlogs/
 

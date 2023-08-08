@@ -31,10 +31,12 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 RUN docker-php-ext-install zip
 
 # Install ImageMagick
-RUN docker-php-ext-install imagemagick
+RUN apt-get install -y libmagickwand-dev --no-install-recommends && rm -rf /var/lib/apt/lists/*
+RUN printf "\n" | pecl install imagick
+RUN docker-php-ext-enable imagick
 
 # Install OpenJDK
-RUN docker-php-ext-install openjdk-11-jdk
+RUN apt update && apt install -y default-jdk && apt install -y default-jre
 
 # Install gd
 RUN docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype
