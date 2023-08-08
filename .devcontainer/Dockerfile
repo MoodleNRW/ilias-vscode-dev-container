@@ -50,6 +50,15 @@ RUN docker-php-ext-install soap
 # Install xml
 RUN docker-php-ext-install xml
 
+# Install opcache
+RUN docker-php-ext-install opcache
+
+# Install exif
+RUN docker-php-ext-install exif
+
+#Install xsl
+RUN docker-php-ext-install xsl
+
 # Set PHP variables for ILIAS
 RUN echo 'max_execution_time = 300' >> /usr/local/etc/php/conf.d/docker-php-maxexectime.ini;
 RUN echo 'upload_max_filesize = 2048M' >> /usr/local/etc/php/conf.d/docker-php-uploadmaxfilesize.ini;
