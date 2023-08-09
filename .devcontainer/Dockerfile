@@ -47,9 +47,6 @@ RUN docker-php-ext-install gd
 # Install soap
 RUN docker-php-ext-install soap
 
-# Install xml
-RUN docker-php-ext-install xml
-
 # Install opcache
 RUN docker-php-ext-install opcache
 
