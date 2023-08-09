@@ -7,7 +7,8 @@ done
 PWD="$(pwd)"
 
 # ILIAS
-echo -e "\nInstall ILIAS\n"
+echo -e "\nInstall ILIAS as \n"
+
 sudo chmod 775 $PWD &&
   sudo rm -rf /var/www/html &&
   sudo ln -s $PWD /var/www/html
@@ -43,7 +44,6 @@ for ILIAS_VERSION in $ILIAS_VERSION; do
   sudo echo ${MIN_CONFIG_JSON} >.devcontainer/minimal-config.json
   sudo cp .devcontainer/minimal-config.json /var/www/minimal-config.json
 
-  sudo echo -e "Composer call"
   composer -d /var/www/html/ilias-${ILIAS_VERSION} update
 
   ILIAS_VERSION_DB=${DB_NAME}_${ILIAS_VERSION}
@@ -67,7 +67,6 @@ for ILIAS_VERSION in $ILIAS_VERSION; do
     sudo crontab -l 2>/dev/null
     echo "* * * * * /usr/local/bin/php /var/www/html/ilias-${ILIAS_VERSION}/cron/cron.php > /dev/null"
   ) | sudo crontab -
-  # sudo chown -R www-data:www-data $ILIASDIR
 done
 
 sudo cp .devcontainer/php.ini /usr/local/etc/php/php.ini

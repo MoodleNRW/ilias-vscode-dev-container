@@ -21,7 +21,7 @@
   // Start Apache and Cron
   "postStartCommand": "nohup bash ./.devcontainer/postStartCommand.sh >/dev/null 2>&1", // This disables outputting a local nohup log
   // Set local container user
-  "remoteUser": "vscode",
+  "remoteUser": "root",
   // Set environment variables,
   "remoteEnv": {
     "ILIAS_VERSION": "8", //e.g. 7, 8 etc. - multiple selections are possible!
