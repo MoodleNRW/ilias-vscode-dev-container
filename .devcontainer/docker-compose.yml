@@ -7,14 +7,14 @@ services:
       dockerfile: Dockerfile
       args:
         VARIANT: "8.0"
-        NODE_VERSION: "lts/*"
+        NODE_VERSION: "--lts"
     volumes:
       - ..:/workspace:cached
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
     network_mode: service:db
   db:
-    image: mariadb:10.3
+    image: mariadb:10.6
     restart: unless-stopped
     volumes:
       - mariadb-data:/var/lib/mysql
