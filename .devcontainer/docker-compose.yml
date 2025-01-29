@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        VARIANT: "8.0"
+        VARIANT: "8.2-bullseye"
         NODE_VERSION: "--lts"
     volumes:
       - ..:/workspace:cached

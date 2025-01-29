@@ -1,6 +1,6 @@
 # [Choice] PHP version (use -bullseye variants on local arm64/Apple Silicon): 8, 8.1, 8.0, 7, 7.4, 7.3, 8-bullseye, 8.1-bullseye, 8.0-bullseye, 7-bullseye, 7.4-bullseye, 7.3-bullseye, 8-buster, 8.1-buster, 8.0-buster, 7-buster, 7.4-buster
 ARG VARIANT="8.2-bullseye"
-FROM mcr.microsoft.com/vscode/devcontainers/php:0-${VARIANT} 
+FROM mcr.microsoft.com/vscode/devcontainers/php:${VARIANT} 
 # Install MariaDB client
 # Fix for Missing Key in https://dl.yarnpkg.com/debian stable InRelease | https://github.com/yarnpkg/yarn/issues/7866
 # RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
@@ -59,9 +59,9 @@ RUN docker-php-ext-install exif
 RUN docker-php-ext-install xsl
 
 # Set PHP variables for ILIAS
-RUN echo 'max_execution_time = 300' >> /usr/local/etc/php/conf.d/docker-php-maxexectime.ini;
+RUN echo 'max_execution_time = 600' >> /usr/local/etc/php/conf.d/docker-php-maxexectime.ini;
 RUN echo 'upload_max_filesize = 2048M' >> /usr/local/etc/php/conf.d/docker-php-uploadmaxfilesize.ini;
 RUN echo 'post_max_size = 2048M' >> /usr/local/etc/php/conf.d/docker-php-postmaxsize.ini;
-RUN echo 'max_input_vars = 5000' >> /usr/local/etc/php/conf.d/docker-php-maxinputvars.ini;
+RUN echo 'max_input_vars = 10000' >> /usr/local/etc/php/conf.d/docker-php-maxinputvars.ini;
 RUN echo 'date.timezone = Europe/Amsterdam' >> /usr/local/etc/php/conf.d/docker-php-datetimezone.ini;
 RUN echo 'memory_limit = 512M' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini;

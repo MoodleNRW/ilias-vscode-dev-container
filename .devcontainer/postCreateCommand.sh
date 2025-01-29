@@ -7,14 +7,14 @@ done
 PWD="$(pwd)"
 
 # ILIAS
-echo -e "\nInstall ILIAS as \n"
+echo -e "\nInstall ILIAS \n"
 
 sudo chmod 775 $PWD &&
   sudo rm -rf /var/www/html &&
   sudo ln -s $PWD /var/www/html
 
 for ILIAS_VERSION in $ILIAS_VERSION; do
-  DATADIR=/var/wwww/iliasdata-${ILIAS_VERSION}
+  DATADIR=/var/www/iliasdata-${ILIAS_VERSION}
   if [ -d "$DATADIR" ]; then
     sudo rm -rf $DATADIR
   fi
@@ -31,6 +31,7 @@ for ILIAS_VERSION in $ILIAS_VERSION; do
 
   ILIASDIR=$PWD/ilias-${ILIAS_VERSION}
   if [ ! -d "$ILIASDIR" ]; then
+    echo -e "ERROR: ILIASDIR '$ILIASDIR' doesn't exist. Cloning..."
     git clone -b release_${ILIAS_VERSION} https://github.com/ILIAS-eLearning/ILIAS.git $ILIASDIR --depth 1
     if [ -d "$ILIASDIR/.git" ]; then
       sudo rm -rf $ILIASDIR/.git
@@ -45,6 +46,10 @@ for ILIAS_VERSION in $ILIAS_VERSION; do
   sudo cp .devcontainer/minimal-config.json /var/www/minimal-config.json
 
   composer -d /var/www/html/ilias-${ILIAS_VERSION} update
+
+  # Why is this needed?
+  echo "Installing npm dependencies in $ILIASDIR..."
+  cd "$ILIASDIR" && npm clean-install --omit-dev --ignore-scripts
 
   ILIAS_VERSION_DB=${DB_NAME}_${ILIAS_VERSION}
   ILIAS_VERSION_DB_USER=${DB_USER}_${ILIAS_VERSION}
@@ -61,6 +66,13 @@ for ILIAS_VERSION in $ILIAS_VERSION; do
 
   sudo echo -e "Safe dir"
   git config --global --add safe.directory $ILIASDIR
+
+  echo -e "ILIASDIR chmod"
+  sudo chown -R www-data:www-data $ILIASDIR &&
+    sudo chmod -R 775 $ILIASDIR
+
+  sudo chown -R www-data:www-data $PWD/ilias-${ILIAS_VERSION}
+    sudo chmod -R 755 $PWD/ilias-${ILIAS_VERSION}
 
   # Add cronjob for instance
   (
@@ -87,5 +99,8 @@ if [ ! -f "/var/www/ilias_test.log" ]; then
   sudo touch /workspace/tmp/log/ilias_test.log
 fi
 
-sudo chown -R www-data:www-data $PWD/tmp/
-sudo chmod -R 775 $PWD/tmp/
+echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+echo "Apache restart"
+# Test configuration and restart Apache
+apache2ctl configtest && systemctl restart apache2
